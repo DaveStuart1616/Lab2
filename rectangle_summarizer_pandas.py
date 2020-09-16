@@ -18,6 +18,7 @@ for key, value in summary:
     print(f"{key}: {str(value)}")
 
 # %%
-dfp = pd.DataFrame(dict(summary), index=[1])
-dfp.to_csv("summary2.csv")
-
+#dfp = pd.DataFrame(dict(summary), index=[0])
+#dfp.to_csv("summary2.csv")
+output_df = pd.DataFrame(dict(summary), index=[0])
+output_df.to_csv("summary2.csv", index=False)

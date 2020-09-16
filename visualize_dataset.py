@@ -9,33 +9,33 @@ df.head(10)
 
 
 # %% Generate descriptive statistics regardless the datatypes
-df.describe()
+df.describe(include="all")
 
 
 # %% Remove all the rows with null value and generate stats again
-df.drop.na()
-df.describe()
+df = df.dropna()
+df.describe(include="all")
 
 # %% Remove rows with invalid Quantity (Quantity being less than 0)
-df[(df["Quantity"] > 0)]
-
+df = df[df["Quantity"] > 0]
+df.describe(include="all")
 
 # %% Remove rows with invalid UnitPrice (UnitPrice being less than 0)
-df[~(df["UnitPrice"] < 0)]
-
+df = df[df["UnitPrice"] > 0]
+df.describe(include="all")
 
 # %% Only Retain rows with 5-digit StockCode
-df.drop(~("StockCode", numeric_only))
+is_length_5 = df["StockCode"].astype(str).apply(len) == 5
+is_numeric = df["StockCode"].astype(str).str.isnumeric()
+df = df[is_length_5 & is_numeric]
+df.describe(include="all")
 
-
-# %% strip all description
-df = pd.read_excel("Online Retail.xlsx")
-
-
+# %% strip Description - remove white space
+df["Description"] = df["Description"].str.strip()
+df.describe(include="all")
 
 # %% Generate stats again and check the number of rows
-df.describe()
-d.shape
+df.describe(include="all")
 
 # %% Plot top 5 selling countries
 import matplotlib.pyplot as plt
@@ -50,16 +50,27 @@ plt.title("Top 5 Selling Countries")
 
 # %% Plot top 20 selling products, drawing the bars vertically to save room for product description
 
-top_20_products = df["StockCode"].value_counts()[:20]
-sns.countplot(x=top_20_products.values, y=top_20_products.index)
-plt.xlabel("Amount")
+top20_selling_products = df["Description"].value_counts()[:20]
+sns.barplot(
+    y=top20_selling_products.index, 
+    x=top20_selling_products.values
+)
 plt.ylabel("Product")
+plt.xlabel("Amount")
 plt.title("Top 20 Selling Products")
 
+# %%
+#same as above but with countplot
+#sns.countplot(
+#   data=df,
+#   y="Description",
+#   order=df["Description"].value_counts().index[:20]
+#)
+     
 
 # %% Focus on sales in UK
-df.loc["Country" == "United Kingdom"]
-# df = df.loc[(df.Country == "United Kingdom")
+df = df[df["Country"] == "United Kingdom"]
+
 
 #%% Show gross revenue by year-month
 from datetime import datetime
@@ -72,3 +83,5 @@ df["YearMonth"] = df["InvoiceDate"].apply(
 
 # %% save df in pickle format with name "UK.pkl" for next lab activity
 # we are only interested in InvoiceNo, StockCode, Description columns
+df.to_pickle("UK.pkl")
+#df[["InvoiceNo", "StockCode", "Description"]].to_pickle("UK.pkl")
