@@ -44,7 +44,7 @@ import matplotlib.pyplot as plt
 sns.scatterplot(x=rules["support"], y=rules["confidence"], alpha=0.5)
 plt.xlabel("Support")
 plt.ylabel("Confidence")
-_ =plt.title("Support vs Confidence")
+_ =plt.title("Support vs Confidence")  
 
 
 # %% scatterplot support vs lift  
