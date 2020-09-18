@@ -8,8 +8,10 @@ df.head(10)
 
 # %% convert dataframe to invoice-based transactional format
 dataset = df.groupby("InvoiceNo").apply(
-    lambda d: d["Description"].to_list()) #list(d["Description"])
+    lambda d: d["Description"].to_list()) #create list of string lists
 
+#df.groupby("InvoiceNo").apply(
+    #lambda d: list(d["Description"]))   ALSO WORKS
 # %% apply apriori algorithm to find frequent items and association rules
 
 from mlxtend.preprocessing import TransactionEncoder
@@ -39,10 +41,15 @@ rules.sort_values("lift", ascending=False).head(10)
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-sns.scatterplot(data=rules, x="support", y="lift", alpha=0.5)
+sns.scatterplot(x=rules["support"], y=rules["confidence"], alpha=0.5)
 plt.xlabel("Support")
 plt.ylabel("Confidence")
-_ =plt.title("Support vs Lift")
+_ =plt.title("Support vs Confidence")
 
 
 # %% scatterplot support vs lift
+sns.scatterplot(data=rules, x="support", y="lift", alpha=0.5)
+plt.xlabel("Support")
+plt.ylabel("Lift")
+_ =plt.title("Support vs Lift")
+# %%
