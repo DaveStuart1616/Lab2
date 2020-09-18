@@ -47,7 +47,7 @@ plt.ylabel("Confidence")
 _ =plt.title("Support vs Confidence")
 
 
-# %% scatterplot support vs lift
+# %% scatterplot support vs lift  
 sns.scatterplot(data=rules, x="support", y="lift", alpha=0.5)
 plt.xlabel("Support")
 plt.ylabel("Lift")
