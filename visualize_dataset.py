@@ -77,7 +77,7 @@ from datetime import datetime
 
 df["YearMonth"] = df["InvoiceDate"].apply(
     lambda dt: datetime(year=dt.year, month=dt.month, day=1)
-)
+)   # changes full datetime to year/mo and 1st day of month
 #%%
 df["GrossRevenue"] = df["Quantity"] * df["UnitPrice"]
 df_y_m = df.groupby(["YearMonth"]).sum()["GrossRevenue"].reset_index()

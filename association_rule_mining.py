@@ -3,7 +3,7 @@ import pandas as pd
 
 df = pd.read_pickle("UK.pkl")
 
-df.head()
+df.head(10)
 
 
 # %% convert dataframe to invoice-based transactional format
@@ -27,7 +27,7 @@ rules
 # %% count of frequent itemsets that have more then 1/2/3 items,
 # and the frequent itemsets that has the most items
 
-length = frequent_itemsets["itemsets"].apple(len)
+length = frequent_itemsets["itemsets"].apply(len)
 
 frequent_itemsets[length > 1]
 
@@ -42,7 +42,7 @@ import matplotlib.pyplot as plt
 sns.scatterplot(data=rules, x="support", y="lift", alpha=0.5)
 plt.xlabel("Support")
 plt.ylabel("Confidence")
-plt.title("Support vs Lift")
+_ =plt.title("Support vs Lift")
 
 
 # %% scatterplot support vs lift
