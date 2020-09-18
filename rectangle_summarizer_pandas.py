@@ -22,3 +22,5 @@ for key, value in summary:
 #dfp.to_csv("summary2.csv")
 output_df = pd.DataFrame(dict(summary), index=[0])
 output_df.to_csv("summary2.csv", index=False)
+
+# %%

@@ -78,10 +78,15 @@ from datetime import datetime
 df["YearMonth"] = df["InvoiceDate"].apply(
     lambda dt: datetime(year=dt.year, month=dt.month, day=1)
 )
+#%%
+df["GrossRevenue"] = df["Quantity"] * df["UnitPrice"]
+df_y_m = df.groupby(["YearMonth"]).sum()["GrossRevenue"].reset_index()
 
-
+#%%
+sns.lineplot(x="YearMonth" , y="GrossRevenue" , data=df_y_m) 
 
 # %% save df in pickle format with name "UK.pkl" for next lab activity
 # we are only interested in InvoiceNo, StockCode, Description columns
-df.to_pickle("UK.pkl")
-#df[["InvoiceNo", "StockCode", "Description"]].to_pickle("UK.pkl")
+#df.to_pickle("UK.pkl")
+df[["InvoiceNo", "StockCode", "Description"]].to_pickle("UK.pkl")
+# %%
